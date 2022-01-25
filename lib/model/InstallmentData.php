@@ -298,11 +298,11 @@ class InstallmentData implements ModelInterface, ArrayAccess
         if ($this->container['initiator'] === null) {
             $invalidProperties[] = "'initiator' can't be null";
         }
-        if (!preg_match("/mit|cit/", $this->container['initiator'])) {
+        if (!preg_match("/mit|cit/", (string) $this->container['initiator'])) {
             $invalidProperties[] = "invalid value for 'initiator', must be conform to the pattern /mit|cit/.";
         }
 
-        if (!is_null($this->container['installment_type']) && !preg_match("/IF|MF_HOLD|MF_HOLD_SPLIT|MF_WITHOUT_HOLD/", $this->container['installment_type'])) {
+        if (!is_null($this->container['installment_type']) && !preg_match("/IF|MF_HOLD|MF_HOLD_SPLIT|MF_WITHOUT_HOLD/", (string) $this->container['installment_type'])) {
             $invalidProperties[] = "invalid value for 'installment_type', must be conform to the pattern /IF|MF_HOLD|MF_HOLD_SPLIT|MF_WITHOUT_HOLD/.";
         }
 
@@ -762,7 +762,7 @@ class InstallmentData implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -774,6 +774,7 @@ class InstallmentData implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -787,7 +788,7 @@ class InstallmentData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -803,7 +804,7 @@ class InstallmentData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

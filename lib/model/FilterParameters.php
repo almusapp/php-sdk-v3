@@ -258,7 +258,7 @@ class FilterParameters implements ModelInterface, ArrayAccess
             );
         }
 
-        if (!is_null($this->container['sort_order']) && !preg_match("/asc|desc/", $this->container['sort_order'])) {
+        if (!is_null($this->container['sort_order']) && !preg_match("/asc|desc/", (string) $this->container['sort_order'])) {
             $invalidProperties[] = "invalid value for 'sort_order', must be conform to the pattern /asc|desc/.";
         }
 
@@ -518,7 +518,7 @@ class FilterParameters implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -530,6 +530,7 @@ class FilterParameters implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -543,7 +544,7 @@ class FilterParameters implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -559,7 +560,7 @@ class FilterParameters implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

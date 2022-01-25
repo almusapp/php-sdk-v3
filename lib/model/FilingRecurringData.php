@@ -219,7 +219,7 @@ class FilingRecurringData implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'initiator', the character length must be bigger than or equal to 0.";
         }
 
-        if (!is_null($this->container['initiator']) && !preg_match("/cit/", $this->container['initiator'])) {
+        if (!is_null($this->container['initiator']) && !preg_match("/cit/", (string) $this->container['initiator'])) {
             $invalidProperties[] = "invalid value for 'initiator', must be conform to the pattern /cit/.";
         }
 
@@ -413,7 +413,7 @@ class FilingRecurringData implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -425,6 +425,7 @@ class FilingRecurringData implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -438,7 +439,7 @@ class FilingRecurringData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -454,7 +455,7 @@ class FilingRecurringData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

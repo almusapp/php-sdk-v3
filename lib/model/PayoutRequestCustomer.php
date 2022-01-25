@@ -268,7 +268,7 @@ class PayoutRequestCustomer implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'phone', the character length must be bigger than or equal to 5.";
         }
 
-        if (!is_null($this->container['tax_reason_code']) && !preg_match("/^[0-9]{9}$/", $this->container['tax_reason_code'])) {
+        if (!is_null($this->container['tax_reason_code']) && !preg_match("/^[0-9]{9}$/", (string) $this->container['tax_reason_code'])) {
             $invalidProperties[] = "invalid value for 'tax_reason_code', must be conform to the pattern /^[0-9]{9}$/.";
         }
 
@@ -587,7 +587,7 @@ class PayoutRequestCustomer implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -599,6 +599,7 @@ class PayoutRequestCustomer implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -612,7 +613,7 @@ class PayoutRequestCustomer implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -628,7 +629,7 @@ class PayoutRequestCustomer implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

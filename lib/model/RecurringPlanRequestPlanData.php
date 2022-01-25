@@ -237,7 +237,7 @@ class RecurringPlanRequestPlanData implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'name', the character length must be bigger than or equal to 0.";
         }
 
-        if (!preg_match("/^[A-Za-z0-9!@#<>№\"$%^&*()_+=~|;:,\\'\\-\/\\.\\?\\s]+$/", $this->container['name'])) {
+        if (!preg_match("/^[A-Za-z0-9!@#<>№\"$%^&*()_+=~|;:,\\'\\-\/\\.\\?\\s]+$/", (string) $this->container['name'])) {
             $invalidProperties[] = "invalid value for 'name', must be conform to the pattern /^[A-Za-z0-9!@#<>№\"$%^&*()_+=~|;:,\\'\\-\/\\.\\?\\s]+$/.";
         }
 
@@ -460,7 +460,7 @@ class RecurringPlanRequestPlanData implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -472,6 +472,7 @@ class RecurringPlanRequestPlanData implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -485,7 +486,7 @@ class RecurringPlanRequestPlanData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -501,7 +502,7 @@ class RecurringPlanRequestPlanData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

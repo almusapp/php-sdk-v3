@@ -194,15 +194,15 @@ class ThreeDSecureData implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['card_enrollment']) && !preg_match("/[SNY]/", $this->container['card_enrollment'])) {
+        if (!is_null($this->container['card_enrollment']) && !preg_match("/[SNY]/", (string) $this->container['card_enrollment'])) {
             $invalidProperties[] = "invalid value for 'card_enrollment', must be conform to the pattern /[SNY]/.";
         }
 
-        if (!is_null($this->container['status']) && !preg_match("/[YAU]/", $this->container['status'])) {
+        if (!is_null($this->container['status']) && !preg_match("/[YAU]/", (string) $this->container['status'])) {
             $invalidProperties[] = "invalid value for 'status', must be conform to the pattern /[YAU]/.";
         }
 
-        if (!is_null($this->container['three_d_secure_flow']) && !preg_match("/3DS1|3DS2C|3DS2F/", $this->container['three_d_secure_flow'])) {
+        if (!is_null($this->container['three_d_secure_flow']) && !preg_match("/3DS1|3DS2C|3DS2F/", (string) $this->container['three_d_secure_flow'])) {
             $invalidProperties[] = "invalid value for 'three_d_secure_flow', must be conform to the pattern /3DS1|3DS2C|3DS2F/.";
         }
 
@@ -410,7 +410,7 @@ class ThreeDSecureData implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -422,6 +422,7 @@ class ThreeDSecureData implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -435,7 +436,7 @@ class ThreeDSecureData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -451,7 +452,7 @@ class ThreeDSecureData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

@@ -182,11 +182,11 @@ class PaymentRequestEWalletAccount implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if (!is_null($this->container['creation_date']) && !preg_match("/^[\\d{2,4}|\/?|\\.?]{2,10}$/", $this->container['creation_date'])) {
+        if (!is_null($this->container['creation_date']) && !preg_match("/^[\\d{2,4}|\/?|\\.?]{2,10}$/", (string) $this->container['creation_date'])) {
             $invalidProperties[] = "invalid value for 'creation_date', must be conform to the pattern /^[\\d{2,4}|\/?|\\.?]{2,10}$/.";
         }
 
-        if (!is_null($this->container['expiration_date']) && !preg_match("/^[\\d{2,4}|\/?|\\.?]{2,10}$/", $this->container['expiration_date'])) {
+        if (!is_null($this->container['expiration_date']) && !preg_match("/^[\\d{2,4}|\/?|\\.?]{2,10}$/", (string) $this->container['expiration_date'])) {
             $invalidProperties[] = "invalid value for 'expiration_date', must be conform to the pattern /^[\\d{2,4}|\/?|\\.?]{2,10}$/.";
         }
 
@@ -341,7 +341,7 @@ class PaymentRequestEWalletAccount implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -353,6 +353,7 @@ class PaymentRequestEWalletAccount implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -366,7 +367,7 @@ class PaymentRequestEWalletAccount implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -382,7 +383,7 @@ class PaymentRequestEWalletAccount implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

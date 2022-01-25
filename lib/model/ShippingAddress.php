@@ -210,7 +210,7 @@ class ShippingAddress implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'phone', the character length must be bigger than or equal to 5.";
         }
 
-        if (!is_null($this->container['phone']) && !preg_match("/[-+\\d()wp\\s]+/", $this->container['phone'])) {
+        if (!is_null($this->container['phone']) && !preg_match("/[-+\\d()wp\\s]+/", (string) $this->container['phone'])) {
             $invalidProperties[] = "invalid value for 'phone', must be conform to the pattern /[-+\\d()wp\\s]+/.";
         }
 
@@ -435,7 +435,7 @@ class ShippingAddress implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -447,6 +447,7 @@ class ShippingAddress implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -460,7 +461,7 @@ class ShippingAddress implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -476,7 +477,7 @@ class ShippingAddress implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

@@ -179,7 +179,7 @@ class CardBindingCard implements ModelInterface, ArrayAccess
         if ($this->container['expiration'] === null) {
             $invalidProperties[] = "'expiration' can't be null";
         }
-        if (!preg_match("/([0-9]{2}\/[0-9]{4})/", $this->container['expiration'])) {
+        if (!preg_match("/([0-9]{2}\/[0-9]{4})/", (string) $this->container['expiration'])) {
             $invalidProperties[] = "invalid value for 'expiration', must be conform to the pattern /([0-9]{2}\/[0-9]{4})/.";
         }
 
@@ -208,7 +208,7 @@ class CardBindingCard implements ModelInterface, ArrayAccess
         if ($this->container['security_code'] === null) {
             $invalidProperties[] = "'security_code' can't be null";
         }
-        if (!preg_match("/[0-9]{3,4}/", $this->container['security_code'])) {
+        if (!preg_match("/[0-9]{3,4}/", (string) $this->container['security_code'])) {
             $invalidProperties[] = "invalid value for 'security_code', must be conform to the pattern /[0-9]{3,4}/.";
         }
 
@@ -353,7 +353,7 @@ class CardBindingCard implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -365,6 +365,7 @@ class CardBindingCard implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -378,7 +379,7 @@ class CardBindingCard implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -394,7 +395,7 @@ class CardBindingCard implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

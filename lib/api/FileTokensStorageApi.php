@@ -12,6 +12,7 @@ use Cardpay\model\ApiTokens;
 
 class FileTokensStorageApi implements TokensStorageApi
 {
+    public $terminalCode;
     const API_TOKENS_TMP_FILENAME_PREFIX = 'cardpay_apiv3_tokens_';
 
     private $apiTokensTempFilepath;

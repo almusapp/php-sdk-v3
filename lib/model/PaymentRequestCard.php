@@ -213,7 +213,7 @@ class PaymentRequestCard implements ModelInterface, ArrayAccess
             );
         }
 
-        if (!is_null($this->container['expiration']) && !preg_match("/([0-9]{2}\/[0-9]{4})/", $this->container['expiration'])) {
+        if (!is_null($this->container['expiration']) && !preg_match("/([0-9]{2}\/[0-9]{4})/", (string) $this->container['expiration'])) {
             $invalidProperties[] = "invalid value for 'expiration', must be conform to the pattern /([0-9]{2}\/[0-9]{4})/.";
         }
 
@@ -233,11 +233,11 @@ class PaymentRequestCard implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'pan', the character length must be bigger than or equal to 13.";
         }
 
-        if (!is_null($this->container['pin_code']) && !preg_match("/^[0-9]{4}$/", $this->container['pin_code'])) {
+        if (!is_null($this->container['pin_code']) && !preg_match("/^[0-9]{4}$/", (string) $this->container['pin_code'])) {
             $invalidProperties[] = "invalid value for 'pin_code', must be conform to the pattern /^[0-9]{4}$/.";
         }
 
-        if (!is_null($this->container['security_code']) && !preg_match("/[0-9]{3,4}/", $this->container['security_code'])) {
+        if (!is_null($this->container['security_code']) && !preg_match("/[0-9]{3,4}/", (string) $this->container['security_code'])) {
             $invalidProperties[] = "invalid value for 'security_code', must be conform to the pattern /[0-9]{3,4}/.";
         }
 
@@ -444,7 +444,7 @@ class PaymentRequestCard implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -456,6 +456,7 @@ class PaymentRequestCard implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -469,7 +470,7 @@ class PaymentRequestCard implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -485,7 +486,7 @@ class PaymentRequestCard implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }

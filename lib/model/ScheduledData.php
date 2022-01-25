@@ -238,7 +238,7 @@ class ScheduledData implements ModelInterface, ArrayAccess
         if ($this->container['initiator'] === null) {
             $invalidProperties[] = "'initiator' can't be null";
         }
-        if (!preg_match("/mit|cit/", $this->container['initiator'])) {
+        if (!preg_match("/mit|cit/", (string) $this->container['initiator'])) {
             $invalidProperties[] = "invalid value for 'initiator', must be conform to the pattern /mit|cit/.";
         }
 
@@ -250,7 +250,7 @@ class ScheduledData implements ModelInterface, ArrayAccess
             $invalidProperties[] = "invalid value for 'note', the character length must be bigger than or equal to 0.";
         }
 
-        if (!is_null($this->container['scheduled_type']) && !preg_match("/SA/", $this->container['scheduled_type'])) {
+        if (!is_null($this->container['scheduled_type']) && !preg_match("/SA/", (string) $this->container['scheduled_type'])) {
             $invalidProperties[] = "invalid value for 'scheduled_type', must be conform to the pattern /SA/.";
         }
 
@@ -532,7 +532,7 @@ class ScheduledData implements ModelInterface, ArrayAccess
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
@@ -544,6 +544,7 @@ class ScheduledData implements ModelInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
@@ -557,7 +558,7 @@ class ScheduledData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -573,7 +574,7 @@ class ScheduledData implements ModelInterface, ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->container[$offset]);
     }
